@@ -1,38 +1,35 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.appventas.Controller;
-import com.appelectrodomestico.model.Rol;
-import com.appelectrodomestico.model.Usuario;
+
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TextField;
-import javafx.scene.control.PasswordField;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.swing.JOptionPane;
+import javafx.scene.control.Label;
 
-
+/**
+ *
+ * @author antonigarcia
+ */
 public class LoginController implements Initializable {
-    private static EntityManagerFactory emFactoryObj;
-    private static final String PERSISTENCE_UNI_NAME = "ElektraPU";
-    @FXML private TextField txtLogin;
-    @FXML private PasswordField txtPassword;
-    @Override 
-    public void initialize(URL location, ResourceBundle resources) {
-   
-    }
-
-    public static EntityManager getEntityManager() {
-        return emFactoryObj.createEntityManager();
+    
+    @FXML
+    private Label label;
+    
+    @FXML
+    private void handleButtonAction(ActionEvent event) {
+        System.out.println("You clicked me!");
+        label.setText("Hello World!");
     }
     
-    public void login() {
-        emFactoryObj = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-        EntityManager entityMgr = getEntityManager();
-        entityMgr.getTransaction().begin();
-        if(entityMgr.CreateQuery("select u from Usuario u where u.producto and u.categoria = :categoria")
-                .setParameter("producto", txtProducto.getText()))
-    }
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        // TODO
+    }    
     
 }

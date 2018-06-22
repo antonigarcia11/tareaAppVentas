@@ -10,6 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 @Entity
@@ -17,28 +19,30 @@ import javax.persistence.Table;
 public class Productos  implements Serializable {
     private final IntegerProperty codigo;
     private final StringProperty descripcion;    
-    private Set<Productos> productos;
+    private Categoria categoria;
     public Productos() {
         this.codigo = new SimpleIntegerProperty();
-        this.descripcion = new SimpleStringProperty();
+        this.descripcion = new SimpleStringProperty("");
     }
     public Productos(int codigo, String descripcion) {
         this.codigo = new SimpleIntegerProperty(codigo);
         this.descripcion = new SimpleStringProperty(descripcion);
     }    
     
-    public IntegerProperty codigo() {
-        return codigo;
-    }
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="codigo_rol")
+    @Column(name="codigo_Productos")
     public int getCodigo(){
         return this.codigo.get();
     }
     public void setCodigo(int codigo){
         this.codigo.set(codigo);
     }
+    public IntegerProperty codigo() {
+        return codigo;
+    }
+    
     @Column(name="descripcion")
     public String getDescripcion(){
         return this.descripcion.get();
@@ -50,12 +54,13 @@ public class Productos  implements Serializable {
         return descripcion;
     }
 
-    @OneToMany(mappedBy  = "Productos")
-    public Set<Productos> getProductos() {
-        return productos;
+    @ManyToOne()
+    @JoinColumn(name="codigo_categoria")
+    public Categoria getCategoria() {
+        return categoria;
     }
 
-    public void setcategorias(Set<Categoria> usuarios) {
+    public void setCategorias(Categoria categoria) {
         this.categoria = categoria;
     }
     

@@ -11,21 +11,22 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Column;
 import java.io.Serializable;
+import java.util.Set;
 import javafx.beans.property.IntegerProperty;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 @Entity
 @Table(name="categoria")
 public class Categoria implements Serializable {
     private final IntegerProperty codigo;
     private final StringProperty nombre;
     private final StringProperty descripcion;
-        
-    private Categoria categoria;
+    private Set<Productos> productos;
     public Categoria () {
         this.codigo = new SimpleIntegerProperty();
-        this.nombre = new SimpleStringProperty("");
-        this.descripcion = new SimpleStringProperty("");
+        this.nombre = new SimpleStringProperty();
+        this.descripcion = new SimpleStringProperty();
         
     }    
     public Categoria(int codigo, String nombre, String descripcion) {
@@ -34,24 +35,26 @@ public class Categoria implements Serializable {
         this.descripcion = new SimpleStringProperty(descripcion);
         
     }
+    
+    public IntegerProperty codigo(){
+        return this.codigo;
+    }
        
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="codigo_Categoria")
     public int getCodigo() {
-        return codigo.get();
+        return this.codigo.get();
     }
 
     public void setCodigo(int codigo) {
         this.codigo.set(codigo);
     }
     
-    public IntegerProperty codigo(){
-        return this.codigo;
-    }
+    
     @Column(name="nombre")
     public String getNombre() {
-        return nombre.get();
+        return this.nombre.get();
     }
     
     public void setNombre(String nombre) {
@@ -59,19 +62,28 @@ public class Categoria implements Serializable {
     }
     
     public StringProperty nombre(){
-        return this.nombre;
+        return nombre;
     }
 
     @Column(name="descripcion")
     public String getDescripcion() {
-        return descripcion.get();
+        return this.descripcion.get();
     }
 
-    public void setDescripcion(String login) {
-        this.descripcion.set(login);
+    public void setDescripcion(String descripcion) {
+        this.descripcion.set(descripcion);
     }
 
     public StringProperty descripcion(){
-        return this.descripcion;
+        return descripcion;
+    }
+    
+    @OneToMany(mappedBy = "categoria")
+    public Set<Productos> getProductos() {
+        return productos;
+    }
+    
+    public void setProductos(Set<Productos> productos) {
+        this.productos = productos;
     }
 }
